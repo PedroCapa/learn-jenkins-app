@@ -4,10 +4,16 @@ pipeline {
     environment {
         NETLIFY_SITE_ID = '15065b51-7f55-4b26-b174-73088304123c'
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
-        REACT_APP_VERSION='1.2.3'
+        REACT_APP_VERSION="1.0.$BUILD_ID"
     }
 
     stages {
+
+        stage('Docker') {
+            steps {
+                sh 'docker build -t my-playwright .'
+            }
+        }
         
         stage('Build') {
             agent {
